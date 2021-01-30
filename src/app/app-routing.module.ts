@@ -32,10 +32,10 @@ const routes: Routes = [
     path: 'profile-add',
     loadChildren: () => import('./pages/profile-add/profile-add.module').then( m => m.ProfileAddPageModule)
   },
-  {
-    path: 'user-group',
-    loadChildren: () => import('./pages/user-group/user-group.module').then( m => m.UserGroupPageModule)
-  },
+  // {
+  //   path: 'user-group',
+  //   loadChildren: () => import('./pages/user-group/user-group.module').then( m => m.UserGroupPageModule)
+  // },
   {
     path: 'update-space/:category',
     loadChildren: () => import('./pages/update-space/update-space.module').then( m => m.UpdateSpacePageModule)
@@ -81,7 +81,8 @@ const routes: Routes = [
   {
     path: 'view-gallary/:spaceid',
     loadChildren: () => import('./pages/view-gallary/view-gallary.module').then( m => m.ViewGallaryPageModule)
-  },  {
+  },
+  {
     path: 'forget',
     loadChildren: () => import('./pages/forget/forget.module').then( m => m.ForgetPageModule)
   }

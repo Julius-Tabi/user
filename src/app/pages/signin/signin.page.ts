@@ -53,7 +53,7 @@ export class SigninPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     console.log(this.LoginForm.value);
     this.accountService.SignIn(this.LoginForm.value.email, this.LoginForm.value.password).then((res) => {
-        this.accountServices.usersGroup(this.accountServices.getUserSession(),'user')
+        this.accountServices.usersGroup(this.accountServices.getUserSession(),"user")
     }).then(() => {
       loading.dismiss().then(() => {
     //  this.router.navigateByUrl('/signup');
