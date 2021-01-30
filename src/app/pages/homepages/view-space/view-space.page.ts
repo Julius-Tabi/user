@@ -14,8 +14,8 @@ import * as moment from 'moment';
 import {  PopoverController } from '@ionic/angular';
 import { MessagesPage } from 'src/app/feedback/messages/messages.page';
 /*Remove  extraAmenities*/
-import { AlertController,LoadingController } from '@ionic/angular'; 
-
+import { AlertController,LoadingController } from '@ionic/angular';
+ 
 
 
 @Component({
@@ -90,7 +90,7 @@ export class ViewSpacePage implements OnInit {
     .doc(this.userservice.getProfuid())
     .collection("profile").doc(this.userservice.getSpaceuid()).collection("space").doc(this.userservice.getSpaceId()).get().then(doc=>{
         this.address = doc.data().address;
-        this.categories = doc.data().categories
+      this.categories = doc.data().categories;
         this.image = doc.data().image;
         this.description =  doc.data().description;
         this.amenities .push(doc.data().amenities) ;
@@ -109,7 +109,7 @@ export class ViewSpacePage implements OnInit {
     .doc(this.profuid)
     .collection("profile").doc(this.spaceuid).collection("space").doc(this.spaceId).get().then(doc=>{
         this.address = doc.data().address;
-        this.categories = doc.data().categories
+      this.categories = doc.data().categories;
         this.image = doc.data().image;
         this.description =  doc.data().description;
         this.amenities .push(doc.data().amenities) ;
@@ -193,7 +193,8 @@ public errorMessages = {
 
   ngOnInit() {
    this. checkIfBooked()
-   this.getFavouritesuid()
+    this.getFavouritesuid()
+    
   }
 
 addExtras(x,y){

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { from } from 'rxjs';
+import { AlertController,LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,11 @@ export class SignInSignUpService {
   uid: any;
   // UID:any;
   status: boolean;
-  group: any
+  group: any;
   uidUser: any;
+  error: any;
 
-  constructor(private router: Router, public route: ActivatedRoute) { }
+  constructor(private router: Router, public route: ActivatedRoute, public alertCtrl: AlertController,public loadingCtrl: LoadingController) { }
   // async createAccount(email, password) {
   //   firebase.auth().createUserWithEmailAndPassword(email, password).then(results => {
   //     console.log(results);
@@ -69,6 +71,7 @@ export class SignInSignUpService {
       // this.router.navigateByUrl('booking-list');
     }).catch((error) => {
       console.log(error.message);
+      this.showAlertErrorfb();
     })
   }
   userSession(uidOwner) {
@@ -120,10 +123,7 @@ export class SignInSignUpService {
 
 
   checkExistance(uid) {
-
-
-
-    this.db.collectionGroup("user-profile")
+    this.db.collectionGroup("profile")
       .where("uid", "==", (uid))
       // .where("publishedAt", "<=", new Date("2018-12-31 23:59"))
       .get()
@@ -133,39 +133,102 @@ export class SignInSignUpService {
             console.log("No such user in the profiles Document!");
           } 
           if(doc.exists){
-        
             if (doc.data().usergroup == 'user') {
-              
+              console.log("User")
               this.status = true;            
-             // console.log("Document data:", doc.data());
-             console.log("user welcome");
-             this.setUserProfileUid(doc.id)
-             this.router.navigateByUrl('view-space');
-            } 
-        
+              console.log("Document data:", doc.data());
+              console.log("Yeess! looks like you have a user account profile with us");
+              this.showAlertSuccessLogin();
+              // this.router.navigateByUrl('/working-spaces');
+            } else
+              if (doc.data().usergroup == 'owner') {
+                console.log("Owner")
+                this.status = false;
+                // console.log("Document data:", doc.data());
+                console.log("Oops! looks like you don't have a user account profile with us")
+                this.showAlertError();
+                // this.router.navigateByUrl('/signup'); 
+              }
           }
-     
         });
         // if (this.status != true){
         //   // console.log(this.status)
-        //   console.log("Create profile please")
-        //   this.router.navigateByUrl('/user-group');
+        //   console.log("Create User Account")
+        //   this.router.navigateByUrl('/signup');
         // }
       });
-      
-      
-      
   }
   setStatus(x) {
     this.status = x;
   }
+  returnStatus() {
+    return this.status
+  }
+
   setUserProfileUid(x){
     this.uidUser = x;
   }
   getUserProfileUid(){
     return this.uidUser;
   }
-  returnStatus() {
-    return this.status
-  }
+  
+  async showAlertError() { 
+
+ 
+  // const loading = await this.loader.create()
+  // loading.dismiss().then(() => {
+  //   console.log('loading')
+  // });
+
+  const alert = await this.alertCtrl.create({ 
+    // header: 'Alert!', 
+       message: 'Oops! looks like you do not have a user account profile with us, Click Okay to Create one.',
+      buttons: [
+        {
+          text: 'Okay',
+          handler: async () => {
+            this.router.navigateByUrl('/signup');
+      }
+        },
+      ]
+    }); 
+   await alert.present(); 
+    // const result = await alert.onDidDismiss();  
+    // console.log(result); 
+
+  } 
+  
+  
+   async showAlertErrorfb() { 
+  const alert = await this.alertCtrl.create({ 
+       message: 'The entered Password or Username Incorrect',
+      buttons: [
+        {
+          text: 'Okay',
+          handler: async () => {
+             this.router.navigateByUrl('/signin');
+      }
+        },
+      ]
+    }); 
+   await alert.present(); 
+  } 
+  
+  async showAlertSuccessLogin() { 
+
+  const alert = await this.alertCtrl.create({ 
+    // header: 'Alert!', 
+       message: 'Welcome! ' + this.email + ' Click Okay to See Working spaces',
+      buttons: [
+        {
+          text: 'Okay',
+          handler: async () => {
+            this.router.navigateByUrl('/working-spaces');
+      }
+        },
+      ]
+    }); 
+   await alert.present(); 
+  } 
+ 
 }

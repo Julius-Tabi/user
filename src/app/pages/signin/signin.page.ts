@@ -56,15 +56,41 @@ export class SigninPage implements OnInit {
         this.accountServices.usersGroup(this.accountServices.getUserSession(),'user')
     }).then(() => {
       loading.dismiss().then(() => {
-        // this.router.navigateByUrl('/update-space');
+    //  this.router.navigateByUrl('/signup');
       });
     },
       error => {
         loading.dismiss().then(() => {
+          // this.showAlertErrorfb()
           console.log(error);
         });
       }
     );
     return await loading.present();
   }
+  
+  // async showAlertErrorfb() { 
+
+ 
+  // // const loading = await this.loader.create()
+  // // loading.dismiss().then(() => {
+  // //   console.log('loading')
+  // // });
+
+  // const alert = await this.alertCtrl.create({ 
+  //   // header: 'Alert!', 
+  //      message: 'The Username or Password is Incorrect!',
+  //     buttons: [
+  //       {
+  //         text: 'Okay',
+  //         handler: async () => {
+  //     }
+  //       },
+  //     ]
+  //   }); 
+  //  await alert.present(); 
+  //   // const result = await alert.onDidDismiss();  
+  //   // console.log(result); 
+
+  // } 
 }

@@ -81,7 +81,11 @@ const routes: Routes = [
   {
     path: 'view-gallary/:spaceid',
     loadChildren: () => import('./pages/view-gallary/view-gallary.module').then( m => m.ViewGallaryPageModule)
+  },  {
+    path: 'forget',
+    loadChildren: () => import('./pages/forget/forget.module').then( m => m.ForgetPageModule)
   }
+
 ];
 @NgModule({
   imports: [

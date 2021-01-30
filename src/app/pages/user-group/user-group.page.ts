@@ -19,7 +19,7 @@ export class UserGroupPage implements OnInit {
 }
   ngOnInit() {
     this.accountServices.userGroup(this.accountServices.getUserSession(),
-                                  "owner",
+                                  "user",
                                    this.accountServices.getEmail())
                                    
   }
